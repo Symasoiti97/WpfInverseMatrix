@@ -64,7 +64,7 @@ namespace InverseMatrix
 
         public static Matrix operator *(Matrix A, Matrix B)
         {
-            if (A.N != B.M) throw new Exception("A.N != B.N");
+            if (A.M != B.N) throw new Exception("A.M != B.N");
 
             Matrix C = new Matrix(A.N, B.M);
 

@@ -4,8 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfInverseMatrix"
+        xmlns:vm="clr-namespace:WpfInverseMatrix.ViewModels"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="500">
+
+    <Window.DataContext>
+        <vm:MainWindowViewModel/>
+    </Window.DataContext>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -23,25 +29,38 @@
             <StackPanel Grid.Row="0"
                         Margin="5"
                         Orientation="Horizontal">
-                <TextBox Text=""
+                <TextBox Text="{Binding N, UpdateSourceTrigger=PropertyChanged}"
                          Margin="10,0"
                          Width="50"/>
-                <TextBox Text=""
+                <TextBox Text="{Binding Eps}"
                          Margin="10,0"
                          Width="50"/>
-                <TextBox Text=""
+                <TextBox Text="{Binding M}"
                          Margin="10,0"
                          Width="50"/>
             </StackPanel>
 
-            <DataGrid Grid.Row="1">
-                
+            <DataGrid Grid.Row="1"
+                      Margin="5"
+                      ItemsSource="{Binding DataGridMain}"
+                      CanUserAddRows="False"
+                      CanUserResizeColumns="False"
+                      CanUserResizeRows="False"
+                      CanUserSortColumns="False"
+                      CanUserReorderColumns="False"
+                      CanUserDeleteRows="False">
             </DataGrid>
 
             <Button Grid.Row="2"
                     Content="Solution"
                     Command="{Binding Solution_Click}"/>
 
+        </Grid>
+
+        <Grid Grid.Column="1">
+            <DataGrid Margin="15"
+                      ItemsSource="{Binding DataGridSolution}"
+                      IsReadOnly="True"/>
         </Grid>
         
     </Grid>
