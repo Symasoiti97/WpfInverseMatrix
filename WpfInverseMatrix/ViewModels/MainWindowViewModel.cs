@@ -9,6 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WpfInverseMatrix.Models;
+using InverseMatrix.SolutionInverseMatrix;
+using System.Diagnostics;
+using System.Windows;
 
 namespace WpfInverseMatrix.ViewModels
 {
@@ -21,6 +24,10 @@ namespace WpfInverseMatrix.ViewModels
             N = "3";
             Eps = "0,01";
             M = "1";
+
+            Method1 = "N - ранг матрицы";
+            Method2 = "E - точность";
+            Method3 = "m - порядок метода";
 
             using (DataTable dt = new DataTable())
             {
@@ -54,7 +61,17 @@ namespace WpfInverseMatrix.ViewModels
 
         public DataView DataGridMain { get; set; }
 
-        public DataView DataGridSolution { get; set; }
+        public DataView DataGridSolution1 { get; set; }
+        public DataView DataGridSolution2 { get; set; }
+        public DataView DataGridSolution3 { get; set; }
+
+        public string Method1 { get; set; }
+        public string Method2 { get; set; }
+        public string Method3 { get; set; }
+
+        public string Time1 { get; set; }
+        public string Time2 { get; set; }
+        public string Time3 { get; set; }
 
         public ICommand Solution_Click
         {
@@ -62,9 +79,39 @@ namespace WpfInverseMatrix.ViewModels
             {
                 return new DelegateCommand(()=>
                 {
-                    Matrix A = new Matrix(GetDataGridMain());
-                    Matrix U = InverseMatrixCalculation.FindInverseMatrix(A, double.Parse(Eps), int.Parse(M));
-                    DataGridSolution = SetDataGridSolution(U.GetMatrix()).DefaultView;
+                    try
+                    {
+                        Method1 = "Метод Шульца";
+                        Method2 = "Метод Гаусса";
+                        Method3 = "Метод алгебр. дополнения";
+
+                        Stopwatch watch;
+
+                        Matrix A = new Matrix(GetDataGridMain());
+                        watch = Stopwatch.StartNew();
+                        Matrix U1 = SchulzIterationMethod.GetInverseMatrix(new Matrix(A.GetMatrix()), double.Parse(Eps), int.Parse(M));
+                        Time1 = $"Время {watch.ElapsedMilliseconds} мс";
+
+                        A = new Matrix(GetDataGridMain());
+                        watch = Stopwatch.StartNew();
+                        Matrix U2 = GaussMethod.GetInverseMatrix(new Matrix(A.GetMatrix()));
+                        Time2 = $"Время {watch.ElapsedMilliseconds} мс";
+
+                        A = new Matrix(GetDataGridMain());
+                        watch = Stopwatch.StartNew();
+                        Matrix U3 = AlgComplementMethod.GetInverseMatrix(new Matrix(A.GetMatrix()));
+                        Time3 = $"Время {watch.ElapsedMilliseconds} мс";
+
+                        watch.Stop();
+
+                        DataGridSolution1 = SetDataGridSolution(U1.GetMatrix()).DefaultView;
+                        DataGridSolution2 = SetDataGridSolution(U2.GetMatrix()).DefaultView;
+                        DataGridSolution3 = SetDataGridSolution(U3.GetMatrix()).DefaultView;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"{ex.Message}", "Внимание");
+                    }
                 });
             }
         }

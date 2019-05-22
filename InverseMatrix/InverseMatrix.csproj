@@ -42,9 +42,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="InverseMatrixCalculation.cs" />
+    <Compile Include="SolutionInverseMatrix\AlgComplementMethod.cs" />
+    <Compile Include="SolutionInverseMatrix\GaussMethod.cs" />
     <Compile Include="Matrix.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SolutionInverseMatrix\SchulzIterationMethod.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -6,62 +6,151 @@
         xmlns:local="clr-namespace:WpfInverseMatrix"
         xmlns:vm="clr-namespace:WpfInverseMatrix.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="500">
+        Title="Нахождение обратной матрицы"
+        MinHeight="325" MinWidth="500"
+        Height="325" Width="500" Icon="/WpfInverseMatrix;component/Icons/matrix.ico">
 
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
 
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/>
-                <RowDefinition/>
-                <RowDefinition Height="30"/>
-            </Grid.RowDefinitions>
+        <Grid>
 
-            <StackPanel Grid.Row="0"
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0"
                         Margin="5"
-                        Orientation="Horizontal">
-                <TextBox Text="{Binding N, UpdateSourceTrigger=PropertyChanged}"
+                        Orientation="Horizontal" Grid.ColumnSpan="2">
+                    <TextBlock Text="N"/>
+                    <TextBox Text="{Binding N, UpdateSourceTrigger=PropertyChanged}"
                          Margin="10,0"
                          Width="50"/>
-                <TextBox Text="{Binding Eps}"
+                    <TextBlock Text="E"/>
+                    <TextBox Text="{Binding Eps}"
                          Margin="10,0"
                          Width="50"/>
-                <TextBox Text="{Binding M}"
+                    <TextBlock Text="m"/>
+                    <TextBox Text="{Binding M}"
                          Margin="10,0"
                          Width="50"/>
-            </StackPanel>
+                </StackPanel>
 
-            <DataGrid Grid.Row="1"
-                      Margin="5"
-                      ItemsSource="{Binding DataGridMain}"
-                      CanUserAddRows="False"
-                      CanUserResizeColumns="False"
-                      CanUserResizeRows="False"
-                      CanUserSortColumns="False"
-                      CanUserReorderColumns="False"
-                      CanUserDeleteRows="False">
-            </DataGrid>
+                <DataGrid Grid.Row="1"
+                          Margin="5"
+                          ItemsSource="{Binding DataGridMain}"
+                          CanUserAddRows="False"
+                          CanUserResizeColumns="False"
+                          CanUserResizeRows="False"
+                          HeadersVisibility="None"
+                          CanUserSortColumns="False"
+                          CanUserReorderColumns="False"
+                          CanUserDeleteRows="False" Grid.ColumnSpan="2">
+                </DataGrid>
 
-            <Button Grid.Row="2"
-                    Content="Solution"
-                    Command="{Binding Solution_Click}"/>
+                <Button Grid.Row="2"
+                        Margin="5,0"
+                        Content="Показать решение"
+                        BorderThickness="0"
+                        Command="{Binding Solution_Click}" Grid.ColumnSpan="2"/>
 
+            </Grid>
+            
+            <Grid Grid.Column="1">
+                <StackPanel Margin="10,0">
+                    <StackPanel Orientation="Horizontal">
+                        <Path Fill="DarkBlue" Stroke="LightBlue">
+                            <Path.Data>
+                                <EllipseGeometry RadiusX="5" RadiusY="5" Center="15,15" />
+                            </Path.Data>
+                        </Path>
+                        <TextBlock Text="{Binding Method1}"
+                                   Margin="7"/>
+                    </StackPanel>
+                    <TextBlock Text="{Binding Time1}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Path Fill="DarkGreen" Stroke="LightBlue">
+                            <Path.Data>
+                                <EllipseGeometry RadiusX="5" RadiusY="5" Center="15,15" />
+                            </Path.Data>
+                        </Path>
+                        <TextBlock Text="{Binding Method2}"
+                                   Margin="7"/>
+                    </StackPanel>
+                    <TextBlock Text="{Binding Time2}"/>
+                    <StackPanel Orientation="Horizontal">
+                        <Path Fill="DarkRed" Stroke="LightBlue">
+                            <Path.Data>
+                                <EllipseGeometry RadiusX="5" RadiusY="5" Center="15,15" />
+                            </Path.Data>
+                        </Path>
+                        <TextBlock Text="{Binding Method3}"
+                                   Margin="7"/>
+                    </StackPanel>
+                    <TextBlock Text="{Binding Time3}"/>
+                </StackPanel>
+            </Grid>
         </Grid>
 
-        <Grid Grid.Column="1">
-            <DataGrid Margin="15"
-                      ItemsSource="{Binding DataGridSolution}"
-                      IsReadOnly="True"/>
+        <Grid Grid.Row="1">
+            <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                          VerticalScrollBarVisibility="Auto"
+                          >
+            <StackPanel Orientation="Horizontal">
+                
+                <Path Fill="DarkBlue" Stroke="LightBlue">
+                    <Path.Data>
+                        <EllipseGeometry RadiusX="5" RadiusY="5" Center="15,15" />
+                    </Path.Data>
+                </Path>
+                <DataGrid Margin="10"
+                          MinHeight="100"
+                          MinWidth="120"
+                          ItemsSource="{Binding DataGridSolution1}"
+                          HeadersVisibility="None"
+                          IsReadOnly="True"/>
+                <Path Fill="DarkGreen" Stroke="LightBlue">
+                    <Path.Data>
+                        <EllipseGeometry RadiusX="5" RadiusY="5" Center="15,15" />
+                    </Path.Data>
+                </Path>
+                <DataGrid Margin="10"
+                          MinHeight="100"
+                          MinWidth="120"
+                          HeadersVisibility="None"
+                          ItemsSource="{Binding DataGridSolution2}"
+                          IsReadOnly="True"/>
+                <Path Fill="DarkRed" Stroke="LightBlue">
+                    <Path.Data>
+                        <EllipseGeometry RadiusX="5" RadiusY="5" Center="15,15" />
+                    </Path.Data>
+                </Path>
+                    <DataGrid Margin="10"
+                          MinHeight="100"
+                          MinWidth="120"
+                          HeadersVisibility="None"
+                          ItemsSource="{Binding DataGridSolution3}"
+                          IsReadOnly="True"/>
+                </StackPanel>
+            </ScrollViewer>
         </Grid>
-        
     </Grid>
+
 </Window>
