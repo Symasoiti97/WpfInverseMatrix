@@ -36,6 +36,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icons\matrix.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="DevExpress.Mvvm, Version=18.2.0.0, Culture=neutral, PublicKeyToken=382ad28f6ae31f30, processorArchitecture=MSIL">
       <HintPath>..\packages\DevExpressMvvm.18.2.3\lib\net452\DevExpress.Mvvm.dll</HintPath>
@@ -119,10 +122,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\matrix.ico" />
+    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Models\" />
+    <Resource Include="Icons\matrix.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.2.0.0\build\netstandard1.4\Fody.targets" Condition="Exists('..\packages\Fody.2.0.0\build\netstandard1.4\Fody.targets')" />
