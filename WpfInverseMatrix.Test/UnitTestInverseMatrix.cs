@@ -1,6 +1,4 @@
-﻿using System;
-using System.Windows;
-using InverseMatrix;
+﻿using InverseMatrix;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using InverseMatrix.SolutionInverseMatrix;
 

@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace InverseMatrix
 {
@@ -30,6 +26,18 @@ namespace InverseMatrix
         public double[,] GetMatrix()
         {
             return _matrix;
+        }
+
+        public double this[int n, int m]
+        {
+            get
+            {
+                return _matrix[n, m];
+            }
+            set
+            {
+                _matrix[n, m] = value;
+            }
         }
 
         public static Matrix operator +(Matrix A, Matrix B)
@@ -228,18 +236,6 @@ namespace InverseMatrix
             }
 
             return rezult;
-        }
-
-        public double this[int n, int m]
-        {
-            get
-            {
-                return _matrix[n, m];
-            }
-            set
-            {
-                _matrix[n, m] = value;
-            }
         }
     }
 }

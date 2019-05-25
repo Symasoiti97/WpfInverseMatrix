@@ -25,7 +25,7 @@
 
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
@@ -33,80 +33,91 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="20"/>
                 </Grid.RowDefinitions>
 
                 <StackPanel Grid.Row="0"
                         Margin="5"
                         Orientation="Horizontal" Grid.ColumnSpan="2">
-                    <TextBlock Text="N"/>
+                    <TextBlock Text="N"
+                               ToolTip="N - порядок матрицы"/>
                     <TextBox Text="{Binding N, UpdateSourceTrigger=PropertyChanged}"
                          Margin="10,0"
-                         Width="50"/>
-                    <TextBlock Text="E"/>
+                         Width="30"/>
+                    <TextBlock Text="E"
+                               ToolTip="Точность для метода Шульца"/>
                     <TextBox Text="{Binding Eps}"
                          Margin="10,0"
-                         Width="50"/>
-                    <TextBlock Text="m"/>
-                    <TextBox Text="{Binding M}"
+                         Width="30"/>
+                    <TextBlock Text="digits"
+                               ToolTip="Округление до указанного знака"/>
+                    <TextBox Text="{Binding Digits}"
                          Margin="10,0"
-                         Width="50"/>
+                         Width="30"/>
                 </StackPanel>
 
-                <DataGrid Grid.Row="1"
-                          Margin="5"
-                          ItemsSource="{Binding DataGridMain}"
-                          CanUserAddRows="False"
-                          CanUserResizeColumns="False"
-                          CanUserResizeRows="False"
-                          HeadersVisibility="None"
-                          CanUserSortColumns="False"
-                          CanUserReorderColumns="False"
-                          CanUserDeleteRows="False" Grid.ColumnSpan="2">
-                </DataGrid>
+                <Grid Grid.Row="1">
+                    <StackPanel Margin="10,0">
+                        <StackPanel Orientation="Horizontal">
+                            <Path Fill="DarkBlue" Stroke="LightBlue">
+                                <Path.Data>
+                                    <EllipseGeometry RadiusX="5" RadiusY="5" Center="5,10" />
+                                </Path.Data>
+                            </Path>
+                            <TextBlock Text="{Binding Method1}"
+                                   Margin="5,1"/>
+                        </StackPanel>
+                        <TextBlock Text="{Binding Time1}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Path Fill="DarkGreen" Stroke="LightBlue">
+                                <Path.Data>
+                                    <EllipseGeometry RadiusX="5" RadiusY="5" Center="5,10" />
+                                </Path.Data>
+                            </Path>
+                            <TextBlock Text="{Binding Method2}"
+                                   Margin="5,1"/>
+                        </StackPanel>
+                        <TextBlock Text="{Binding Time2}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Path Fill="DarkRed" Stroke="LightBlue">
+                                <Path.Data>
+                                    <EllipseGeometry RadiusX="5" RadiusY="5" Center="5,10" />
+                                </Path.Data>
+                            </Path>
+                            <TextBlock Text="{Binding Method3}"
+                                   Margin="5,1"/>
+                        </StackPanel>
+                        <TextBlock Text="{Binding Time3}"/>
+                    </StackPanel>
+                </Grid>
 
                 <Button Grid.Row="2"
-                        Margin="5,0"
+                        Margin="45,0"
                         Content="Показать решение"
                         BorderThickness="0"
-                        Command="{Binding Solution_Click}" Grid.ColumnSpan="2"/>
+                        Command="{Binding Solution_Click}"/>
+            </Grid>
 
-            </Grid>
-            
-            <Grid Grid.Column="1">
-                <StackPanel Margin="10,0">
-                    <StackPanel Orientation="Horizontal">
-                        <Path Fill="DarkBlue" Stroke="LightBlue">
-                            <Path.Data>
-                                <EllipseGeometry RadiusX="5" RadiusY="5" Center="15,15" />
-                            </Path.Data>
-                        </Path>
-                        <TextBlock Text="{Binding Method1}"
-                                   Margin="7"/>
-                    </StackPanel>
-                    <TextBlock Text="{Binding Time1}"/>
-                    <StackPanel Orientation="Horizontal">
-                        <Path Fill="DarkGreen" Stroke="LightBlue">
-                            <Path.Data>
-                                <EllipseGeometry RadiusX="5" RadiusY="5" Center="15,15" />
-                            </Path.Data>
-                        </Path>
-                        <TextBlock Text="{Binding Method2}"
-                                   Margin="7"/>
-                    </StackPanel>
-                    <TextBlock Text="{Binding Time2}"/>
-                    <StackPanel Orientation="Horizontal">
-                        <Path Fill="DarkRed" Stroke="LightBlue">
-                            <Path.Data>
-                                <EllipseGeometry RadiusX="5" RadiusY="5" Center="15,15" />
-                            </Path.Data>
-                        </Path>
-                        <TextBlock Text="{Binding Method3}"
-                                   Margin="7"/>
-                    </StackPanel>
-                    <TextBlock Text="{Binding Time3}"/>
-                </StackPanel>
-            </Grid>
+            <DataGrid Grid.Column="1"
+                      Margin="5"
+                      ItemsSource="{Binding DataGridMain}"
+                      AlternationCount="{Binding DataGridMain.Count}"
+                      CanUserAddRows="False"
+                      CanUserResizeColumns="False"
+                      CanUserResizeRows="False"
+                      HeadersVisibility="All"
+                      EnableRowVirtualization="False"
+                      CanUserSortColumns="False"
+                      CanUserReorderColumns="False"
+                      MaxColumnWidth="33"
+                      CanUserDeleteRows="False" Grid.ColumnSpan="2">
+                <DataGrid.RowHeaderStyle>
+                    <Style TargetType="{x:Type DataGridRowHeader}">
+                        <Setter Property="Content" Value="{Binding Path=AlternationIndex, RelativeSource={RelativeSource AncestorType=DataGridRow}}" />
+                        <Setter Property="MinWidth" Value="17"/>
+                    </Style>
+                </DataGrid.RowHeaderStyle>
+            </DataGrid>
         </Grid>
 
         <Grid Grid.Row="1">

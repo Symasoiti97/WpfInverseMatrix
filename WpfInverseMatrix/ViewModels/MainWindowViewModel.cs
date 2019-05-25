@@ -1,14 +1,8 @@
 ﻿using DevExpress.Mvvm;
 using InverseMatrix;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using WpfInverseMatrix.Models;
 using InverseMatrix.SolutionInverseMatrix;
 using System.Diagnostics;
 using System.Windows;
@@ -23,17 +17,17 @@ namespace WpfInverseMatrix.ViewModels
         {
             N = "3";
             Eps = "0,01";
-            M = "1";
+            Digits = 3;
 
-            Method1 = "N - ранг матрицы";
-            Method2 = "E - точность";
-            Method3 = "m - порядок метода";
+            Method1 = "Метод Шульца";
+            Method2 = "Метод Гаусса";
+            Method3 = "Метод алгебр. дополнения";
 
             using (DataTable dt = new DataTable())
             {
+                dt.Columns.Add($"0");
                 dt.Columns.Add($"1");
                 dt.Columns.Add($"2");
-                dt.Columns.Add($"3");
                 dt.Rows.Add(1, 2, 1);
                 dt.Rows.Add(0, 1, 0);
                 dt.Rows.Add(0, 2, 2);
@@ -57,7 +51,7 @@ namespace WpfInverseMatrix.ViewModels
 
         public string Eps { get; set; }
 
-        public string M { get; set; }
+        public int Digits { get; set; }
 
         public DataView DataGridMain { get; set; }
 
@@ -81,15 +75,11 @@ namespace WpfInverseMatrix.ViewModels
                 {
                     try
                     {
-                        Method1 = "Метод Шульца";
-                        Method2 = "Метод Гаусса";
-                        Method3 = "Метод алгебр. дополнения";
-
                         Stopwatch watch;
 
                         Matrix A = new Matrix(GetDataGridMain());
                         watch = Stopwatch.StartNew();
-                        Matrix U1 = SchulzIterationMethod.GetInverseMatrix(new Matrix(A.GetMatrix()), double.Parse(Eps), int.Parse(M));
+                        Matrix U1 = SchulzIterationMethod.GetInverseMatrix(new Matrix(A.GetMatrix()), double.Parse(Eps));
                         Time1 = $"Время {watch.ElapsedMilliseconds} мс";
 
                         A = new Matrix(GetDataGridMain());
@@ -110,7 +100,7 @@ namespace WpfInverseMatrix.ViewModels
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"{ex.Message}", "Внимание");
+                        MessageBox.Show($"{ex.Message}", "Внимание", MessageBoxButton.OK, MessageBoxImage.Warning);
                     }
                 });
             }
@@ -123,7 +113,7 @@ namespace WpfInverseMatrix.ViewModels
 
                 for (int i = 0; i < n; i++)
                 {
-                    dt.Columns.Add($"{i + 1}");
+                    dt.Columns.Add($"{i}");
                 }
 
                 for (int j = 0; j < m; j++)
@@ -167,7 +157,7 @@ namespace WpfInverseMatrix.ViewModels
                     string[] mat = new string[matrix.GetLength(1)];
                     for (int j = 0; j < matrix.GetLength(1); j++)
                     {
-                        mat[j] = "" + Math.Round(matrix[i, j], 3);
+                        mat[j] = "" + Math.Round(matrix[i, j], Digits);
                     }
                     dt.Rows.Add(mat);
                 }
