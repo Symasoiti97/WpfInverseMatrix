@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Windows;
 
 namespace InverseMatrix.SolutionInverseMatrix
 {
@@ -66,16 +64,6 @@ namespace InverseMatrix.SolutionInverseMatrix
             }
 
             return U;
-        }
-
-        private static double MaxOwnValue(double[] vector)
-        {
-            for (int i = 0; i < vector.Length; i++)
-            {
-                vector[i] = Math.Abs(vector[i]);
-            }
-
-            return vector.Max();
         }
 
         private static double OwnMaxValue(Matrix A)

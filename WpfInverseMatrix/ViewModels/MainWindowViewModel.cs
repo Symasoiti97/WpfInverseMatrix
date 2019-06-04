@@ -6,6 +6,7 @@ using System.Windows.Input;
 using InverseMatrix.SolutionInverseMatrix;
 using System.Diagnostics;
 using System.Windows;
+using System.Threading.Tasks;
 
 namespace WpfInverseMatrix.ViewModels
 {
@@ -44,8 +45,15 @@ namespace WpfInverseMatrix.ViewModels
             }
             set
             {
-                _n = value;
-                DataGridMain = SetDataGridMain(int.Parse(N), int.Parse(N)).DefaultView;
+                if (int.Parse(value) <= 30 && int.Parse(value) >= 2)
+                {
+                    _n = value;
+                    Task.Run(() => DataGridMain = SetDataGridMain(int.Parse(N), int.Parse(N)).DefaultView);
+                }
+                else
+                {
+                    throw new Exception("Порядок матрицы не должен быть меньше 2 и превышать 30");
+                }
             }
         }
 

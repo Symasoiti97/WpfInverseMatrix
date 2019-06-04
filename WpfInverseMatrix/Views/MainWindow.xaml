@@ -7,8 +7,8 @@
         xmlns:vm="clr-namespace:WpfInverseMatrix.ViewModels"
         mc:Ignorable="d"
         Title="Нахождение обратной матрицы"
-        MinHeight="325" MinWidth="500"
-        Height="325" Width="500" Icon="/WpfInverseMatrix;component/Icons/matrix.ico">
+        MinHeight="345" MinWidth="500"
+        Height="345" Width="500" Icon="/WpfInverseMatrix;component/Icons/matrix.ico">
 
     <Window.DataContext>
         <vm:MainWindowViewModel/>
@@ -31,7 +31,7 @@
     <Grid>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="150"/>
+            <RowDefinition Height="170"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -47,27 +47,27 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="35"/>
                 </Grid.RowDefinitions>
 
                 <StackPanel Grid.Row="0"
                         Margin="5"
                         Orientation="Horizontal" Grid.ColumnSpan="2">
                     <TextBlock Text="N"
-                               ToolTip="N - порядок матрицы"/>
+                               ToolTip="N - порядок матрицы [2..30]"/>
                     <TextBox Text="{Binding N, UpdateSourceTrigger=PropertyChanged}"
-                         Margin="10,0"
-                         Width="30"/>
+                             Margin="10,0"
+                             Width="25"/>
                     <TextBlock Text="E"
                                ToolTip="Точность для метода Шульца"/>
                     <TextBox Text="{Binding Eps}"
-                         Margin="10,0"
-                         Width="30"/>
+                             Margin="10,0"
+                             Width="60"/>
                     <TextBlock Text="digits"
                                ToolTip="Округление до указанного знака"/>
                     <TextBox Text="{Binding Digits}"
-                         Margin="10,0"
-                         Width="30"/>
+                             Margin="10,0"
+                             Width="25"/>
                 </StackPanel>
 
                 <Grid Grid.Row="1">
@@ -106,10 +106,13 @@
                 </Grid>
 
                 <Button Grid.Row="2"
-                        Margin="45,0"
-                        Content="Показать решение"
+                        Margin="45,5"
+                        Content="ПОКАЗАТЬ РЕШЕНИЕ"
                         BorderThickness="0"
-                        Command="{Binding Solution_Click}"/>
+                        Command="{Binding Solution_Click}" 
+                        Background="Transparent"
+                        Foreground="DarkSlateGray"
+                        FontFamily="Arial Black"/>
             </Grid>
 
             <DataGrid Grid.Column="1"
